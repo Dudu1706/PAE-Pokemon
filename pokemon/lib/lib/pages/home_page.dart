@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon/lib/pages/pokemon_page.dart';
 //import 'package:dio/dio.dart';
 
 class HomePage extends StatefulWidget {
@@ -36,63 +37,79 @@ class _HomePageState extends State<HomePage>{
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             //Text(nomeDoPokemon),
-            TextField(
-              decoration: InputDecoation(
-                hintText: 'Digite o nome do Pokémon:',
-                fillColor: Colors.white,
-                filled: true,
-                border: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: Colors.yellow, width: 5,
-                  ), //BorderSide
-                ), //OutlineInputBorder
-              ), //Decoration
-              border: OutlineInputBorder
-              controller: controller,
-            ),//TextField
-            const SizedBox(
-              height: 16,
-            ), //SizedBox
-            ElevatedButttom(
-              onPressed: () {}
-              child: const Text('Pesquisar'),
-              style: ElevatedButton.styeFrom(
-                padding: EdgeInsets.symmetric(horizontal: 36, vertical: 16),
+           TextField(
+                controller: controller,
+                decoration: const InputDecoration(
+                  hintText: 'Digite o nome do Pokemon:',
+                  fillColor: Colors.white,
+                  filled: true,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.yellow,
+                      width: 3,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.yellow,
+                      width: 3,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.yellow,
+                      width: 3,
+                    ),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(30),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+            ElevatedButton(
+              onPressed: () ansync {
+                final dio = Dio();
+                var response = await dio.get('https://pokeapi.co/api/v2/pokemon/${controller.text}');
+                String name = response.data['name'];
+                String id = response.data['id'].toString();
+                String type = response.data['types'][0]['type']['name'];
+                String imageUrl = response.data['sprites']['front_default'];
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => PokemonPage(
+                      name: name,
+                      id: id,
+                      type: type,
+                      imageUrl: imageUrl,
+                    ), //PokemonPage
+                  ), //MaterialPageRoute
+                );
+              }, //OnPressed
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 16),
                 backgroundColor: Colors.yellow,
               ),
               child: const Text(
                 'Pesquisar',
                 style: TextStyle(
                   color: Colors.blue,
-                ), //TextStyle
-              ), //Text
-            ), //Elevated Button
-            ElevatedButton(
-              onPressed: () ansync {
-                final dio = Dio();
-                Response retorno = await dio.get('https://pokeapi.co/api/v2/pokemon/${controller.text}');
-                Navigator.of(context).push(
-                  MaterailPageRouter(
-                    MaterialPageRoute(
-                      builder: (context) => PokemonPage(
-                        imageUrl: imageUrl,
-                        name: name,
-                        id: id,
-                        type: type,
-                      ), //PokemonPage
-                    ), //MaterialPageToures
-                  ),
+                  fontSize: 20, 
+                  fontWeight: FontWeight.bold,
                 ),
-                setState((){
-                  nomeDoPokemon = retorno.data['name'];
-                });
-                print(retorno.data['types'][0]['types']['name']);
-              } //OnPressed
+              ),
             ), //ElevatedButton
           ], //Children
         ),//Column
       ), //Center
-      backgroundColor: Colors.blue,
     );
   }
 } //StatelessWidget

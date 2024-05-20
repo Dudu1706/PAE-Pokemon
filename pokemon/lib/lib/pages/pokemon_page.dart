@@ -49,7 +49,6 @@ class PokemonPage extends StatelessWidget {
           ],
         ),
       ),
-      backgroundColor: Colors.blue,
     );
   }
 } //StatelessWidget
