@@ -17,10 +17,24 @@ class PokemonPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue,
       appBar: AppBar(
-        title: const Text('Pokemon Page'),
-        backgroundColor: Colors.yellow,
-      ),
+        backgroundColor: Colors.blue,
+        title: const Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [ 
+            Text(
+              'Pokémon Page',
+              style: TextStyle(
+                color: Colors.yellow,
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'Roboto',
+              ),
+            ), //Text
+          ], //Children
+        ), //Row
+      ), //AppBar
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -9,9 +9,16 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Hands On PokeApi',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        textTheme: TextTheme(
+          titleLarge: TextStyle(
+            color: Colors.yellow,
+            fontSize: 36,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       home: const HomePage(),
       routes: {
